@@ -8,6 +8,7 @@
  *     - allow color to appear as part of qualified names (like in imports)
  */
 
+
 grammar Processing;
 
 @lexer::members {
@@ -15,8 +16,12 @@ grammar Processing;
   public static final int COMMENTS = 2;
 }
 
+@header {
+    package processing.mode.java.preproc;
+}
+
 // import Java grammar
-import JavaParser;
+import JavaLexer, JavaParser;
 
 // main entry point, select sketch type
 processingSketch
@@ -107,7 +112,7 @@ literal
     : integerLiteral
     | floatLiteral
     | CHAR_LITERAL
-    | stringLiteral
+    | StringLiteral
     | BOOL_LITERAL
     | NULL_LITERAL
     | hexColorLiteral

@@ -478,18 +478,18 @@ public class PdeParseTreeListener extends ProcessingBaseListener {
    *
    * @param ctx ANTLR context for the literal.
    */
-  public void exitMultilineStringLiteral(ProcessingParser.MultilineStringLiteralContext ctx) {
-    String fullLiteral = ctx.getText();
-    if (SIMULATE_MULTILINE_STRINGS) {
-      delete(ctx.start, ctx.stop);
-      int endIndex = fullLiteral.length() - 3;
-      String literalContents = fullLiteral.substring(3, endIndex);
-      String newLiteralContents = literalContents
-          .replace("\n", "\\n")
-          .replace("\"", "\\\"");
-      insertAfter(ctx.stop, "\"" + newLiteralContents + "\"");
-    }
-  }
+//  public void exitMultilineStringLiteral(ProcessingParser.MultilineStringLiteralContext ctx) {
+//    String fullLiteral = ctx.getText();
+//    if (SIMULATE_MULTILINE_STRINGS) {
+//      delete(ctx.start, ctx.stop);
+//      int endIndex = fullLiteral.length() - 3;
+//      String literalContents = fullLiteral.substring(3, endIndex);
+//      String newLiteralContents = literalContents
+//          .replace("\n", "\\n")
+//          .replace("\"", "\\\"");
+//      insertAfter(ctx.stop, "\"" + newLiteralContents + "\"");
+//    }
+//  }
 
   /**
    * Endpoint for ANTLR to call after parsing a static processing sketch.

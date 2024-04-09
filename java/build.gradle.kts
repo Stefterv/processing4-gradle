@@ -1,6 +1,8 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("application")
+    id("antlr")
 }
 
 group = "org.example"
@@ -8,6 +10,18 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass = "processing.app.ui.Splash"
+}
+
+sourceSets{
+    main{
+        resources {
+            srcDirs("../shared", "src/main/resources")
+        }
+    }
 }
 
 dependencies {
@@ -27,6 +41,8 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+    antlr("org.antlr:antlr4:4.13.1")
 }
 
 tasks.test {
