@@ -330,9 +330,16 @@ public class Platform {
   /**
    * Get reference to a file adjacent to the executable on Windows and Linux,
    * or inside Contents/Resources/Java on Mac OS X. This will return the local
-   * JRE location, *whether or not it is the active JRE*.
+   * JRE location, *whether it is the active JRE*.
    */
   static public File getContentFile(String name) {
+    var url = Platform.class.getClassLoader().getResource("defaults.txt");
+    if(url != null){
+      var parent = new File(url.getPath()).getParent();
+      var removeLib = name.replace("lib","/");
+      return new File(parent, removeLib);
+    }
+
     if (processingRoot == null) {
       // Get the path to the .jar file that contains Base.class
       URL pathURL =

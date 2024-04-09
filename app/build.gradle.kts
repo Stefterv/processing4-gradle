@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("application")
+    id("io.github.fvarrui.javapackager.plugin")
 }
 
 group = "org.example"
@@ -10,8 +11,22 @@ repositories {
     mavenCentral()
 }
 
+sourceSets{
+    main{
+        resources{
+            srcDirs("../shared", "src/main/resources")
+        }
+    }
+}
+
 application {
     mainClass = "processing.app.ui.Splash"
+}
+
+javapackager {
+    mainClass("processing.app.ui.Splash")
+    bundleJre(true)
+    additionalResources(files("../shared").toMutableList())
 }
 
 dependencies {
