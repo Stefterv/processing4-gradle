@@ -744,9 +744,7 @@ public class Base {
 
 
   void buildCoreModes() {
-    ModeContribution javaModeContrib =
-      ModeContribution.load(this, Platform.getContentFile("modes/java"),
-                            getDefaultModeIdentifier());
+    var javaModeContrib = ModeContribution.load(this, Platform.getContentFile("modes/java"), getDefaultModeIdentifier());
     if (javaModeContrib == null) {
       Messages.showError("Startup Error",
                 "Could not load Java Mode, please reinstall Processing.",
