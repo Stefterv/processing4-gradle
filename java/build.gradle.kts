@@ -7,6 +7,7 @@ plugins {
     id("application")
     id("antlr")
     id("de.undercouch.download") version "5.6.0"
+    id("io.github.fvarrui.javapackager.plugin")
 }
 
 group = "org.example"
@@ -18,6 +19,12 @@ repositories {
 
 application {
     mainClass = "processing.app.ui.Splash"
+}
+
+javapackager {
+    mainClass("processing.app.ui.Splash")
+    bundleJre(true)
+    additionalResources(files("../shared").toMutableList())
 }
 
 sourceSets{
@@ -88,8 +95,9 @@ tasks.compileJava { dependsOn("unzipOpenJDK")}
 tasks.register<Copy>("coreJar") {
     group = "build"
     dependsOn(project(":core").tasks.jar)
-    from("../core/build/libs")
-    into("build/resources/main/core/library")
+    dependsOn(tasks.processResources)
+    from(project(":core").layout.buildDirectory.dir("libs"))
+    into(layout.buildDirectory.file("resources/main/core/library"))
     include("*.jar")
 }
 tasks.compileJava { dependsOn("coreJar") }
