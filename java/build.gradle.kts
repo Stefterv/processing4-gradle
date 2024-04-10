@@ -79,7 +79,6 @@ tasks.register<Copy>("unzipOpenJDK"){
     }else{
         eachFile{
             path = Regex("jdk-[^/]+/").replaceFirst(path, "/")
-            print(path)
         }
         into(layout.buildDirectory.file("resources/main/java"))
     }
