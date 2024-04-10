@@ -73,14 +73,14 @@ tasks.register<Copy>("unzipOpenJDK"){
     }else{
         from(tarTree(resources.gzip(file)))
     }
-    eachFile{
-        path = Regex("jdk-[^/]+/").replaceFirst(path, "/")
-        print(path)
-    }
 
     if(os.isMacOsX) {
         into(layout.buildDirectory.file("resources/PlugIns/"))
     }else{
+        eachFile{
+            path = Regex("jdk-[^/]+/").replaceFirst(path, "/")
+            print(path)
+        }
         into(layout.buildDirectory.file("resources/main/java"))
     }
 }
