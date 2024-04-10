@@ -18,7 +18,7 @@ repositories {
 }
 
 application {
-    mainClass = "processing.app.ui.Splash"
+    mainClass = "processing.app.Base"
 }
 
 javapackager {
@@ -28,6 +28,7 @@ javapackager {
     name("Processing")
     url("https://processing.org")
     //    licenseFile("todo")
+    // TODO: Add after resources folder
     additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList() ?: mutableListOf())
     fileAssociations(mutableListOf(
         FileAssociation().apply {
@@ -39,6 +40,16 @@ javapackager {
         isGeneratePkg = false
         appId = "org.processing.app"
         entitlements = file("assets/mac/processing.entitlements")
+        backgroundImage = file("assets/mac/background.png")
+        windowWidth = 750
+        windowHeight = 450
+        iconX = 50
+        iconSize = 250
+        iconY = (windowHeight - iconSize) / 2 + 35
+        appsLinkIconX = (windowWidth - iconSize)
+        appsLinkIconY = iconY
+        windowX = 200
+        windowY = 200
     }
     winConfig.apply {
         isGenerateMsi = false
@@ -47,14 +58,11 @@ javapackager {
         productVersion = project.version as String
         isDisableRunAfterInstall = false
     }
-
-
-
 }
 sourceSets{
     main{
         resources {
-            srcDirs("../shared", "src/main/resources")
+            srcDirs("../shared")
         }
     }
 }
