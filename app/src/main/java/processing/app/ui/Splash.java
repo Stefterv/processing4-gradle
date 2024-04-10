@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -35,9 +36,15 @@ public class Splash extends JFrame {
     } catch (Exception e) {
       // ignored
     }
-    
-    Image image2x =
-      Toolkit.getDefaultToolkit().createImage(image2xFile.getAbsolutePath());
+
+    var resource = Splash.class.getClassLoader().getResourceAsStream("about-2x.png");
+
+    Image image2x = null;
+    try {
+        image2x = Toolkit.getDefaultToolkit().createImage(resource.readAllBytes());
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
 
     MediaTracker tracker = new MediaTracker(this);
     tracker.addImage(image2x, 0);
@@ -55,10 +62,11 @@ public class Splash extends JFrame {
       final int wide = image2x.getWidth(this) / 2;
       final int high = image2x.getHeight(this) / 2;
 
+      Image finalImage2x = image2x;
       JComponent comp = new JComponent() {
         public void paintComponent(Graphics g) {
           processing.app.ui.Toolkit.prepareGraphics(g);
-          g.drawImage(image2x, 0, 0, wide, high, this);
+          g.drawImage(finalImage2x, 0, 0, wide, high, this);
         }
 
         public Dimension getPreferredSize() {
@@ -169,7 +177,8 @@ public class Splash extends JFrame {
       System.setProperty("sun.java2d.uiScale.enabled", "false");
     }
     try {
-      showSplash(Platform.getContentFile("lib/about-2x.png"));
+      var file = new File(Splash.class.getClassLoader().getResource("about-2x.png").getPath());
+      showSplash(file);
       invokeMain("processing.app.Base", args);
       disposeSplash();
 
