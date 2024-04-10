@@ -334,59 +334,67 @@ public class Platform {
    */
   static public File getContentFile(String name) {
     var url = Platform.class.getClassLoader().getResource("defaults.txt");
-    if(url != null){
-      var parent = new File(url.getPath()).getParent();
-      var removeLib = name.replace("lib","/");
-      return new File(parent, removeLib);
-    }
+    if(url == null) Messages.showError("Missing defaults.txt", "Could not find the main resource file", new Exception(""));
 
-    if (processingRoot == null) {
-      // Get the path to the .jar file that contains Base.class
-      URL pathURL =
-          Base.class.getProtectionDomain().getCodeSource().getLocation();
-      // Decode URL
-      String decodedPath;
-      try {
-        decodedPath = pathURL.toURI().getSchemeSpecificPart();
-      } catch (URISyntaxException e) {
-        Messages.showError("Missing File",
-          "Could not access a required file:\n" +
-            "<b>" + name + "</b>\n" +
-            "You may need to reinstall Processing.", e);
-        return null;
-      }
+    if(!url.getPath().contains("jar!")){
+      var path = url.getPath();
+      var parent = new File(path).getParent();
 
-      if (decodedPath.contains("/app/bin")) {  // This means we're in Eclipse
-        final File build = new File(decodedPath, "../../build").getAbsoluteFile();
-        if (Platform.isMacOS()) {
-          processingRoot = new File(build, "macos/work/Processing.app/Contents/Java");
-        } else if (Platform.isWindows()) {
-          processingRoot =  new File(build, "windows/work");
-        } else if (Platform.isLinux()) {
-          processingRoot =  new File(build, "linux/work");
-        }
-      } else {
-        // The .jar file will be in the lib folder
-        File jarFolder = new File(decodedPath).getParentFile();
-        if (jarFolder.getName().equals("lib")) {
-          // The main Processing installation directory.
-          // This works for Windows, Linux, and Apple's Java 6 on OS X.
-          processingRoot = jarFolder.getParentFile();
-        } else if (Platform.isMacOS()) {
-          // This works for Java 8 on OS X. We don't have things inside a 'lib'
-          // folder on OS X. Adding it caused more problems than it was worth.
-          processingRoot = jarFolder;
-        }
-        if (processingRoot == null || !processingRoot.exists()) {
-          // Try working directory instead (user.dir, different from user.home)
-          System.err.println("Could not find lib folder via " +
-            jarFolder.getAbsolutePath() +
-            ", switching to user.dir");
-          processingRoot = new File(""); // resolves to "user.dir"
-        }
-      }
+      var removeLib = name.replace("lib","");
+      var file = new File(parent, removeLib);
+      return file;
     }
-    return new File(processingRoot, name);
+//    Messages.showMessage("requested", name);
+
+    return new File(name.replace("lib","shared"));
+//
+//    if (processingRoot == null) {
+//      // Get the path to the .jar file that contains Base.class
+//      URL pathURL =
+//          Base.class.getProtectionDomain().getCodeSource().getLocation();
+//      // Decode URL
+//      String decodedPath;
+//      try {
+//        decodedPath = pathURL.toURI().getSchemeSpecificPart();
+//      } catch (URISyntaxException e) {
+//        Messages.showError("Missing File",
+//          "Could not access a required file:\n" +
+//            "<b>" + name + "</b>\n" +
+//            "You may need to reinstall Processing.", e);
+//        return null;
+//      }
+//
+//      if (decodedPath.contains("/app/bin")) {  // This means we're in Eclipse
+//        final File build = new File(decodedPath, "../../build").getAbsoluteFile();
+//        if (Platform.isMacOS()) {
+//          processingRoot = new File(build, "macos/work/Processing.app/Contents/Java");
+//        } else if (Platform.isWindows()) {
+//          processingRoot =  new File(build, "windows/work");
+//        } else if (Platform.isLinux()) {
+//          processingRoot =  new File(build, "linux/work");
+//        }
+//      } else {
+//        // The .jar file will be in the lib folder
+//        File jarFolder = new File(decodedPath).getParentFile();
+//        if (jarFolder.getName().equals("lib")) {
+//          // The main Processing installation directory.
+//          // This works for Windows, Linux, and Apple's Java 6 on OS X.
+//          processingRoot = jarFolder.getParentFile();
+//        } else if (Platform.isMacOS()) {
+//          // This works for Java 8 on OS X. We don't have things inside a 'lib'
+//          // folder on OS X. Adding it caused more problems than it was worth.
+//          processingRoot = jarFolder;
+//        }
+//        if (processingRoot == null || !processingRoot.exists()) {
+//          // Try working directory instead (user.dir, different from user.home)
+//          System.err.println("Could not find lib folder via " +
+//            jarFolder.getAbsolutePath() +
+//            ", switching to user.dir");
+//          processingRoot = new File(""); // resolves to "user.dir"
+//        }
+//      }
+//    }
+//    return new File(processingRoot, name);
   }
 
 
