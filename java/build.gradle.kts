@@ -110,6 +110,14 @@ dependencies {
     antlr("org.antlr:antlr4:4.13.1")
 }
 
+
+tasks.compileJava{
+    options.encoding = "UTF-8"
+}
+tasks.compileTestJava {
+    options.encoding = "UTF-8"
+}
+
 tasks.test {
     useJUnitPlatform()
 }
