@@ -27,7 +27,7 @@ javapackager {
     displayName("Processing")
     name("Processing")
     url("https://processing.org")
-    additionalResources( file("build/resources/main").list().map { t->  file("build/resources/main/${t}") }.toMutableList())
+    additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList())
 }
 
 sourceSets{
