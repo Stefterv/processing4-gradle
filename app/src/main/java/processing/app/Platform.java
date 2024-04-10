@@ -335,22 +335,23 @@ public class Platform {
   static public File getContentFile(String name) {
     var url = Platform.class.getClassLoader().getResource("defaults.txt");
     if(url == null) Messages.showError("Missing defaults.txt", "Could not find the main resource file", new Exception(""));
-
-    if(!url.getPath().startsWith("jar")){
+    //Messages.showMessage("hi",System.getProperty("user.dir"));
+    if(!url.toString().startsWith("jar")){
       var path = url.getPath();
       var parent = new File(path).getParent();
+
 
       var removeLib = name.replace("lib","");
       var file = new File(parent, removeLib);
       return file;
     }
-    return new File(name.replace("lib",""));
+    return new File(System.getProperty("user.dir"),name.replace("lib",""));
 //
 //    if (processingRoot == null) {
 //      // Get the path to the .jar file that contains Base.class
 //      URL pathURL =
-//          Base.class.getProtectionDomain().getCodeSource().getLocation();
-//      // Decode URL
+//          Base.class.getProtectionDomain().getCodeSource().();
+//      // Decode URLgetLocation
 //      String decodedPath;
 //      try {
 //        decodedPath = pathURL.toURI().getSchemeSpecificPart();
