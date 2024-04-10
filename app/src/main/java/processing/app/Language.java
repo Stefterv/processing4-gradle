@@ -111,7 +111,6 @@ public class Language {
   static private String[] listSupported() {
     StringList supported = new StringList();
 
-    var path = "";
     try {
       var baseFolder = Base.getLibFile("languages");
       var names = baseFolder.list();

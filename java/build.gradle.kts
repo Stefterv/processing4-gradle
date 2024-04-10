@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "org.example"
-version = "1"
+version = "4.4"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,9 @@ application {
 javapackager {
     mainClass("processing.app.ui.Splash")
     bundleJre(true)
-    additionalResources(files("../shared").toMutableList())
+    displayName("Processing")
+    name("Processing")
+    url("https://processing.org")
 }
 
 sourceSets{
