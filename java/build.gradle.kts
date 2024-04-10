@@ -40,6 +40,13 @@ javapackager {
         appId = "org.processing.app"
         entitlements = file("assets/mac/processing.entitlements")
     }
+    winConfig.apply {
+        isGenerateMsi = false
+        isGenerateMsm = false
+        fileVersion = project.version as String
+        productVersion = project.version as String
+        isDisableRunAfterInstall = false
+    }
 
 
 
