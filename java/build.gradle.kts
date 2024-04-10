@@ -1,8 +1,12 @@
+import de.undercouch.gradle.tasks.download.Download
+
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("application")
     id("antlr")
+    id("de.undercouch.download") version "5.6.0"
+
 }
 
 group = "org.example"
@@ -23,6 +27,18 @@ sourceSets{
         }
     }
 }
+tasks.register<Download>("openJDK"){
+//    src("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-${jdk.detail}%2B${jdk.build}/OpenJDK17U-${jdk.download.dist}_${jdk.download.arch}_${jdk.download.os}_hotspot_${jdk.detail}_${jdk.build}.${jdk.download.ext}")
+    src("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1%2B12/OpenJDK17U-jre_aarch64_mac_hotspot_17.0.1_12.tar.gz")
+    dest(layout.buildDirectory.file("resources/main/java/openjdk.tar.gz"))
+}
+tasks.register<Copy>("unzipOpenJDK"){
+    dependsOn("openJDK")
+    dependsOn(tasks.processResources)
+    from(tarTree(layout.buildDirectory.file("resources/main/java/openjdk.tar.gz")))
+    into(layout.buildDirectory.file("resources/PlugIns/"))
+}
+tasks.compileJava { dependsOn("unzipOpenJDK")}
 
 tasks.register<Copy>("coreJar") {
     group = "build"

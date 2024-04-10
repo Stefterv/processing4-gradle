@@ -112,7 +112,7 @@ literal
     : integerLiteral
     | floatLiteral
     | CHAR_LITERAL
-    | StringLiteral
+    | STRING_LITERAL
     | BOOL_LITERAL
     | NULL_LITERAL
     | hexColorLiteral
