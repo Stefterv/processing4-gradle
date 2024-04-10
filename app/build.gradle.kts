@@ -11,7 +11,13 @@ repositories {
     mavenCentral()
 }
 
-
+sourceSets{
+    main{
+        resources{
+            srcDirs("../shared", "src/main/resources")
+        }
+    }
+}
 
 application {
     mainClass = "processing.app.ui.Splash"
