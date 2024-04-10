@@ -1,6 +1,6 @@
 import de.undercouch.gradle.tasks.download.Download
+import io.github.fvarrui.javapackager.model.FileAssociation
 import org.gradle.internal.os.OperatingSystem
-import java.util.*
 
 plugins {
     id("java")
@@ -10,7 +10,7 @@ plugins {
     id("io.github.fvarrui.javapackager.plugin")
 }
 
-group = "org.example"
+group = "org.processing"
 version = "4.4"
 
 repositories {
@@ -27,9 +27,23 @@ javapackager {
     displayName("Processing")
     name("Processing")
     url("https://processing.org")
+    //    licenseFile("todo")
     additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList() ?: mutableListOf())
-}
+    fileAssociations(mutableListOf(
+        FileAssociation().apply {
+            extension = "pde"
+            description = "Processing Source Code"
+        }
+    ))
+    macConfig.apply {
+        isGeneratePkg = false
+        appId = "org.processing.app"
+        entitlements = file("assets/mac/processing.entitlements")
+    }
 
+
+
+}
 sourceSets{
     main{
         resources {
