@@ -336,7 +336,7 @@ public class Platform {
     var url = Platform.class.getClassLoader().getResource("defaults.txt");
     if(url == null) Messages.showError("Missing defaults.txt", "Could not find the main resource file", new Exception(""));
 
-    if(!url.getPath().contains("jar!")){
+    if(!url.getPath().startsWith("jar")){
       var path = url.getPath();
       var parent = new File(path).getParent();
 
@@ -344,9 +344,7 @@ public class Platform {
       var file = new File(parent, removeLib);
       return file;
     }
-//    Messages.showMessage("requested", name);
-
-    return new File(name.replace("lib","shared"));
+    return new File(name.replace("lib",""));
 //
 //    if (processingRoot == null) {
 //      // Get the path to the .jar file that contains Base.class
