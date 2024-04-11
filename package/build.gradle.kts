@@ -1,22 +1,19 @@
 import io.github.fvarrui.javapackager.model.FileAssociation
-import org.gradle.internal.os.OperatingSystem
-import de.undercouch.gradle.tasks.download.Download
 
 plugins {
     id("java")
     id("application")
     id("io.github.fvarrui.javapackager.plugin")
-    id("de.undercouch.download") version "5.6.0"
 }
 
 group = "org.processing"
-version = "unspecified"
-
+version = "4.4"
 
 application {
     mainClass = "processing.app.Base"
 }
 
+// This can be removed by moving the asset management to native Java resources
 sourceSets{
     main{
         resources {
@@ -76,7 +73,7 @@ dependencies {
     implementation(project(":java"))
 }
 
-
+// This could be removed if the internal build system within processing was moved to gradle
 tasks.register<Copy>("coreJar") {
     group = "build"
     dependsOn(project(":core").tasks.jar)
