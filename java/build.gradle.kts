@@ -11,6 +11,7 @@ version = "4.4"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jogamp.org/deployment/maven") }
 }
 
 
@@ -28,6 +29,7 @@ dependencies {
     implementation(project(":core"))
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-core:5.11.0")
 
 

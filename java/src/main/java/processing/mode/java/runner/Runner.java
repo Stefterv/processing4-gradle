@@ -203,11 +203,14 @@ public class Runner implements MessageConsumer {
     StringList sketchParams = getSketchParams(present, args);
 //    PApplet.printArray(sketchParams);
     int port = 8000 + (int) (Math.random() * 1000);
+    boolean debug = Boolean.parseBoolean(System.getenv("DEBUG"));
+    if(debug) port = 5005;
     String portStr = String.valueOf(port);
 
     // Added 'quiet=y' for 3.0.2 to prevent command line parsing problems
     // https://github.com/processing/processing/issues/4098
     String jdwpArg = "-agentlib:jdwp=transport=dt_socket,address=" + portStr + ",server=y,suspend=y,quiet=y";
+    if(debug) jdwpArg = "-agentlib:jdwp=transport=dt_socket,server=n,address=*:5005,suspend=y";
 
     // Everyone works the same under Java 7 (also on OS X)
     StringList commandArgs = new StringList();
@@ -224,6 +227,8 @@ public class Runner implements MessageConsumer {
     }
 
     launchJava(commandArgs.array());
+
+    if(debug) return true;
 
     AttachingConnector connector = (AttachingConnector)
       findConnector("com.sun.jdi.SocketAttach");
@@ -291,6 +296,7 @@ public class Runner implements MessageConsumer {
     } catch (IllegalConnectorArgumentsException exc) {
       throw new Error("Internal error: " + exc);
     }
+
   }
 
 
