@@ -59,13 +59,13 @@ javapackager {
         isDisableRunAfterInstall = false
     }
 }
-sourceSets{
-    main{
-        resources {
-            srcDirs("../shared")
-        }
-    }
-}
+//sourceSets{
+//    main{
+//        resources {
+//            srcDirs("../shared")
+//        }
+//    }
+//}
 
 tasks.register<Download>("openJDK"){
     val version = "17"
