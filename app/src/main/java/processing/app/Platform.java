@@ -396,14 +396,7 @@ public class Platform {
 
 
   static public File getJavaHome() {
-    if (Platform.isMacOS()) {
-      //return "Contents/PlugIns/jdk1.7.0_40.jdk/Contents/Home/jre/bin/java";
-      File[] plugins = getContentFile("../PlugIns").listFiles((dir, name) -> dir.isDirectory() &&
-        name.contains("jre") && !name.startsWith("."));
-      return new File(plugins[0], "Contents/Home");
-    }
-    // On all other platforms, it's the 'java' folder adjacent to Processing
-    return getContentFile("java");
+    return new File(System.getProperty("java.home"));
   }
 
 

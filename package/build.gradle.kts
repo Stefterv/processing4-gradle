@@ -77,64 +77,6 @@ dependencies {
 }
 
 
-
-tasks.register<Download>("openJDK"){
-    val version = "17"
-    val distribution = "jre"
-    var os = System.getProperty("os.name").lowercase()
-    var arch = System.getProperty("os.arch").lowercase()
-
-    os = when {
-        os.contains("linux") -> "linux"
-        os.contains("windows") -> "windows"
-        os.contains("mac") || os.contains("darwin") -> "mac"
-        os.contains("sunos") || os.contains("solaris") -> "solaris"
-        os.contains("aix") -> "aix"
-        os.contains("alpine") -> "alpine-linux"
-        else -> "linux"
-    }
-
-    arch = when (arch) {
-        "amd64", "x86_64" -> "x64"
-        "x86", "i386", "i486", "i586", "i686" -> "x86"
-        "aarch64" -> "aarch64"
-        "ppc64" -> "ppc64"
-        "ppc64le" -> "ppc64le"
-        "s390x" -> "s390x"
-        "sparcv9" -> "sparcv9"
-        "riscv64" -> "riscv64"
-        else -> "x64"
-    }
-
-//    API: https://github.com/adoptium/api.adoptium.net/blob/main/docs/cookbook.adoc#example-two-linking-to-the-latest-jdk-or-jre
-    val download = "https://api.adoptium.net/v3/binary/latest/${version}/ga/${os}/${arch}/${distribution}/hotspot/normal/eclipse"
-    src(download)
-    dest(layout.buildDirectory.file("tmp/openjdk"))
-}
-
-tasks.register<Copy>("unzipOpenJDK"){
-    val os = OperatingSystem.current()
-
-    dependsOn("openJDK")
-    dependsOn(tasks.processResources)
-    val file = layout.buildDirectory.file("tmp/openjdk")
-    if(os.isWindows){
-        from(zipTree(file))
-    }else{
-        from(tarTree(resources.gzip(file)))
-    }
-
-    if(os.isMacOsX) {
-        into(layout.buildDirectory.file("resources/PlugIns/"))
-    }else{
-        eachFile{
-            path = Regex("jdk-[^/]+/").replaceFirst(path, "/")
-        }
-        into(layout.buildDirectory.file("resources/main/java"))
-    }
-}
-tasks.compileJava { dependsOn("unzipOpenJDK")}
-
 tasks.register<Copy>("coreJar") {
     group = "build"
     dependsOn(project(":core").tasks.jar)
