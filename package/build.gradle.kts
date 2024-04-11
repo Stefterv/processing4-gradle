@@ -1,9 +1,11 @@
+import de.undercouch.gradle.tasks.download.Download
 import io.github.fvarrui.javapackager.model.FileAssociation
 
 plugins {
     id("java")
     id("application")
     id("io.github.fvarrui.javapackager.plugin")
+    id("de.undercouch.download") version "5.6.0"
 }
 
 group = "org.processing"
@@ -83,3 +85,22 @@ tasks.register<Copy>("coreJar") {
     include("*.jar")
 }
 tasks.compileJava { dependsOn("coreJar") }
+
+tasks.register<Download>("downloadExamples"){
+    dependsOn(tasks.processResources)
+    src("https://github.com/processing/processing-examples/archive/refs/heads/main.tar.gz")
+    dest(layout.buildDirectory.file("examples.tar.gz"))
+    overwrite(false)
+}
+
+tasks.register<Copy>("unzipExamples"){
+    val dl = tasks.findByPath("downloadExamples") as Download
+    dependsOn(dl)
+    from(tarTree(dl.dest))
+    eachFile{
+        path = Regex("processing-examples-[^/]+/").replaceFirst(path, "/")
+    }
+    into(layout.buildDirectory.dir("resources/main/modes/java/examples"))
+}
+
+tasks.jar{ finalizedBy("unzipExamples") }
