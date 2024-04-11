@@ -20,8 +20,8 @@ sourceSets{
 }
 
 dependencies {
-    implementation("org.jogamp.gluegen:gluegen-rt-main:2.4.0")
-    implementation("org.jogamp.jogl:jogl-all-main:2.4.0")
+    implementation("org.jogamp.gluegen:gluegen-rt-main:2.5.0")
+    implementation("org.jogamp.jogl:jogl-all-main:2.5.0")
 
 
     testImplementation("junit:junit:4.13.2")
