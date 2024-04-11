@@ -90,7 +90,7 @@ tasks.register<Copy>("coreJar") {
     dependsOn(tasks.processResources)
     from(project(":core").layout.buildDirectory.dir("libs"))
     into(layout.buildDirectory.file("resources/main/core/library"))
-    include("*.jar")
+    include("*-all.jar")
 }
 tasks.compileJava { dependsOn("coreJar") }
 
