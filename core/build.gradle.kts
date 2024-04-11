@@ -11,6 +11,14 @@ repositories {
     maven { url = uri("https://jogamp.org/deployment/maven") }
 }
 
+sourceSets{
+    main{
+        resources{
+            srcDirs("src/main/java/")
+        }
+    }
+}
+
 dependencies {
     implementation("org.jogamp.gluegen:gluegen-rt-main:2.4.0")
     implementation("org.jogamp.jogl:jogl-all-main:2.4.0")
