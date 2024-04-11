@@ -13,8 +13,7 @@ dependencies {
     implementation("org.jogamp.gluegen:gluegen-rt-main:2.3.2")
     implementation("org.jogamp.jogl:jogl-all-main:2.3.2")
 
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("junit:junit:4.13.2")
 }
 
 tasks.test {
