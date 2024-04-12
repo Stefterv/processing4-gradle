@@ -12,6 +12,14 @@ repositories {
     maven { url = uri("https://jogamp.org/deployment/maven") }
 }
 
+sourceSets{
+    main{
+        resources{
+            srcDirs("src/main/java/")
+        }
+    }
+}
+
 application {
     mainClass = "processing.app.ui.Splash"
 }
