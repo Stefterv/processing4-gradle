@@ -167,18 +167,14 @@ public class Base {
     // these times are fairly negligible relative to Base.<init>
 //    long t1 = System.currentTimeMillis();
 
-    File versionFile = Platform.getContentFile("lib/version.txt");
-    if (versionFile != null && versionFile.exists()) {
-      String[] lines = PApplet.loadStrings(versionFile);
-      if (lines != null && lines.length > 0) {
-        if (!VERSION_NAME.equals(lines[0])) {
-          VERSION_NAME = lines[0];
-        }
-      }
+    try (var versionData = Platform.class.getClassLoader().getResourceAsStream("version.txt")) {
+      VERSION_NAME = new String(versionData.readAllBytes());
+    } catch (IOException ignored) {
+
     }
 
     // Detect settings.txt in the lib folder for portable versions
-    File settingsFile = Platform.getContentFile("lib/settings.txt");
+    var settingsFile = new File(System.getProperty("user.dir"),"settings.txt");
     if (settingsFile != null && settingsFile.exists()) {
       try {
         Settings portable = new Settings(settingsFile);
@@ -2170,6 +2166,7 @@ public class Base {
   /**
    * Return a File from inside the Processing 'lib' folder.
    */
+  @Deprecated
   @SuppressWarnings("RedundantThrows")
   static public File getLibFile(String filename) throws IOException {
     return new File(Platform.getContentFile("lib"), filename);
@@ -2179,6 +2176,7 @@ public class Base {
   /**
    * Return an InputStream for a file inside the Processing lib folder.
    */
+  @Deprecated
   static public InputStream getLibStream(String filename) throws IOException {
     return new FileInputStream(getLibFile(filename));
   }
