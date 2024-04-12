@@ -164,6 +164,13 @@ public abstract class Editor extends JFrame implements RunnerListener {
     // Make sure Base.getActiveEditor() never returns null
     base.checkFirstEditor(this);
 
+//    if( SystemInfo.isMacFullWindowContentSupported )
+    getRootPane().putClientProperty( "apple.awt.transparentTitleBar", true );
+    getRootPane().putClientProperty( "apple.awt.fullWindowContent", true );
+//    getRootPane().putClientProperty( "apple.awt.windowTitleVisible", false );
+
+
+
     // This is a Processing window. Get rid of that ugly ass coffee cup.
     Toolkit.setIcon(this);
 

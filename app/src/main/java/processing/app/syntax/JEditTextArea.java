@@ -135,8 +135,7 @@ public class JEditTextArea extends JComponent
     add(vertical = new JScrollBar(Adjustable.VERTICAL), BorderLayout.EAST);
     add(horizontal = new JScrollBar(Adjustable.HORIZONTAL), BorderLayout.SOUTH);
     // what a dreadful hack to get the scrollbar to align
-    horizontal.setBorder(new EmptyBorder(0, 0, 0, vertical.getPreferredSize().width));
-
+    horizontal.setBorder(new EmptyBorder(0, 20, 0, vertical.getPreferredSize().width));
     /*
     // this fixes the glitch at the lower-right of the scrollbars,
     // but results in the scrolling area behaving very oddly,
@@ -401,6 +400,7 @@ public class JEditTextArea extends JComponent
       vertical.setValues(firstLine,visibleLines,0,getLineCount());
       vertical.setUnitIncrement(2);
       vertical.setBlockIncrement(visibleLines);
+      vertical.setVisible(visibleLines < getLineCount());
     }
 
     //if (horizontal != null && width != 0) {
@@ -419,6 +419,7 @@ public class JEditTextArea extends JComponent
       int charWidth = painter.getFontMetrics().charWidth('w');
       int width = maxLineLength * charWidth;
       int painterWidth = painter.getScrollWidth();
+      horizontal.setVisible(width > painterWidth);
 
       // Update to how horizontal scrolling is handled
       // https://github.com/processing/processing/issues/319

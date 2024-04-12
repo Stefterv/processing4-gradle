@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 import processing.app.Base;
 import processing.app.Language;
 import processing.app.Mode;
+import processing.app.Platform;
 
 
 /**
@@ -44,7 +45,7 @@ import processing.app.Mode;
 abstract public class EditorToolbar extends JPanel implements KeyListener {
   // haven't decided how to handle this/how to make public/consistency
   // for components/does it live in theme.txt
-  static final int HIGH = Toolkit.zoom(56);
+  static final int HIGH = Toolkit.zoom(56 +(Platform.isMacOS()? 20: 0));
   // horizontal gap between buttons
   static final int GAP = Toolkit.zoom(9);
 
@@ -79,6 +80,7 @@ abstract public class EditorToolbar extends JPanel implements KeyListener {
     List<EditorButton> buttons = createButtons();
 
     box = Box.createHorizontalBox();
+
     box.add(Box.createHorizontalStrut(Editor.LEFT_GUTTER));
 
     rolloverLabel = new JLabel();
@@ -97,6 +99,10 @@ abstract public class EditorToolbar extends JPanel implements KeyListener {
     box.add(Box.createHorizontalStrut(Editor.RIGHT_GUTTER));
 
     setLayout(new BorderLayout());
+    if(Platform.isMacOS()) {
+      add(Box.createVerticalStrut(Toolkit.zoom(20)), BorderLayout.NORTH);
+    }
+
     add(box, BorderLayout.CENTER);
 
     updateTheme();
