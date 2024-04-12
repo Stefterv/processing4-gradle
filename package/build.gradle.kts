@@ -27,10 +27,10 @@ sourceSets{
 javapackager {
     mainClass("processing.app.ui.Splash")
 
-    bundleJre(false)
+//    bundleJre(false)
     // Bundling the JRE is what is causing the missing classes for the autocomplete, it doesn't copy over the jmod files that we need
-    // bundleJre(true)
-    // customizedJre(false) // Disabled to enabled debugging on the build package
+    bundleJre(true)
+//    customizedJre(false) // Disabled to enabled debugging on the build package
 
     displayName("Processing")
     name("Processing")
@@ -46,7 +46,7 @@ javapackager {
     ))
     macConfig.apply {
         isGeneratePkg = false
-//        isGenerateDmg = false
+        isGenerateDmg = false
         appId = "org.processing.app"
         entitlements = file("assets/mac/processing.entitlements")
         backgroundImage = file("assets/mac/background.png")

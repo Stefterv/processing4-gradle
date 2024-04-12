@@ -504,7 +504,7 @@ public class PreprocService {
           compilableStage,
           className,
           result.classPathArray,
-          true
+          false
       );
     } else {
       bindingsCompile = compileFromDisk(
