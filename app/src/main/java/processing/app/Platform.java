@@ -44,16 +44,7 @@ import processing.data.StringDict;
 public class Platform {
   static DefaultPlatform inst;
 
-  /*
-  static Map<Integer, String> platformNames = new HashMap<>();
-  static {
-    platformNames.put(PConstants.WINDOWS, "windows"); //$NON-NLS-1$
-    platformNames.put(PConstants.MACOS, "macos"); //$NON-NLS-1$
-    platformNames.put(PConstants.LINUX, "linux"); //$NON-NLS-1$
-  }
-  */
-
-  // TODO only used in one place, probably overkill for this to be a map
+    // TODO only used in one place, probably overkill for this to be a map
   static Map<String, Integer> platformIndices = new HashMap<>();
   static {
     platformIndices.put("windows", PConstants.WINDOWS); //$NON-NLS-1$
@@ -324,14 +315,12 @@ public class Platform {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-
-  static protected File processingRoot;
-
   /**
    * Get reference to a file adjacent to the executable on Windows and Linux,
    * or inside Contents/Resources/Java on Mac OS X. This will return the local
    * JRE location, *whether it is the active JRE*.
    */
+  @Deprecated
   static public File getContentFile(String name) {
     var url = Platform.class.getClassLoader().getResource("defaults.txt");
     if(url == null) Messages.showError("Missing defaults.txt", "Could not find the main resource file", new Exception(""));
@@ -340,58 +329,9 @@ public class Platform {
       var parent = new File(path).getParent();
 
       var removeLib = name.replace("lib","");
-      var file = new File(parent, removeLib);
-      return file;
+      return new File(parent, removeLib);
     }
     return new File(System.getProperty("user.dir"),name.replace("lib",""));
-//
-//    if (processingRoot == null) {
-//      // Get the path to the .jar file that contains Base.class
-//      URL pathURL =
-//          Base.class.getProtectionDomain().getCodeSource().();
-//      // Decode URLgetLocation
-//      String decodedPath;
-//      try {
-//        decodedPath = pathURL.toURI().getSchemeSpecificPart();
-//      } catch (URISyntaxException e) {
-//        Messages.showError("Missing File",
-//          "Could not access a required file:\n" +
-//            "<b>" + name + "</b>\n" +
-//            "You may need to reinstall Processing.", e);
-//        return null;
-//      }
-//
-//      if (decodedPath.contains("/app/bin")) {  // This means we're in Eclipse
-//        final File build = new File(decodedPath, "../../build").getAbsoluteFile();
-//        if (Platform.isMacOS()) {
-//          processingRoot = new File(build, "macos/work/Processing.app/Contents/Java");
-//        } else if (Platform.isWindows()) {
-//          processingRoot =  new File(build, "windows/work");
-//        } else if (Platform.isLinux()) {
-//          processingRoot =  new File(build, "linux/work");
-//        }
-//      } else {
-//        // The .jar file will be in the lib folder
-//        File jarFolder = new File(decodedPath).getParentFile();
-//        if (jarFolder.getName().equals("lib")) {
-//          // The main Processing installation directory.
-//          // This works for Windows, Linux, and Apple's Java 6 on OS X.
-//          processingRoot = jarFolder.getParentFile();
-//        } else if (Platform.isMacOS()) {
-//          // This works for Java 8 on OS X. We don't have things inside a 'lib'
-//          // folder on OS X. Adding it caused more problems than it was worth.
-//          processingRoot = jarFolder;
-//        }
-//        if (processingRoot == null || !processingRoot.exists()) {
-//          // Try working directory instead (user.dir, different from user.home)
-//          System.err.println("Could not find lib folder via " +
-//            jarFolder.getAbsolutePath() +
-//            ", switching to user.dir");
-//          processingRoot = new File(""); // resolves to "user.dir"
-//        }
-//      }
-//    }
-//    return new File(processingRoot, name);
   }
 
 
