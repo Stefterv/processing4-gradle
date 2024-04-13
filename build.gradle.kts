@@ -1,5 +1,7 @@
 plugins {
     id("java")
+    kotlin("jvm") version "1.9.23"
+    id("org.jetbrains.compose") version "1.6.2" apply false
 }
 
 group = "org.processing"
