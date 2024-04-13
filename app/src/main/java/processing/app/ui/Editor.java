@@ -23,13 +23,7 @@
 
 package processing.app.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.*;
 import java.awt.print.*;

@@ -324,6 +324,7 @@ public class Base {
       //System.out.println(laf.getExtraDefaults());
       //UIManager.setLookAndFeel(laf);
       FlatLaf.setup(laf);
+      UIManager.put("Viewport.background", "#FF0000");
       // updateUI() will wipe out our custom components
       // even if we do a setUI() call and invalidate/revalidate/repaint
 //      FlatLaf.updateUI();

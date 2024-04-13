@@ -23,13 +23,13 @@
 
 package processing.app.platform;
 
-import java.awt.Desktop;
-import java.awt.Font;
+import java.awt.*;
 import java.io.File;
 
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.sun.jna.Library;
@@ -120,13 +120,16 @@ public class DefaultPlatform {
 
     // pull in FlatLaf.properties from the processing.app.laf folder
     FlatLaf.registerCustomDefaultsSource("processing.app.laf");
+    UIManager.put("MenuBar.background", "FF0000");
+    FlatLightLaf.setup();
 
     // start with Light, but updateTheme() will be called soon
-    UIManager.setLookAndFeel(new FlatLightLaf());
+    //UIManager.setLookAndFeel(new FlatDarkLaf());
 
     // Does not fully remove the gray hairline (probably from a parent
     // Window object), but is an improvement from the heavier default.
-    UIManager.put("ToolTip.border", new EmptyBorder(0, 0, 0, 0));
+    //UIManager.put("ToolTip.border", new EmptyBorder(0, 0, 0, 0));
+
 
     /*
     javax.swing.UIDefaults defaults = UIManager.getDefaults();
