@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "1.9.23"
 }
 
 group = "org.example"
@@ -25,9 +26,13 @@ dependencies {
 
 
     testImplementation("junit:junit:4.13.2")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 
 tasks.test {
     useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(21)
 }
