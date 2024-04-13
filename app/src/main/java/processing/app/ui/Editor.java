@@ -71,6 +71,8 @@ import processing.app.laf.PdeMenuItemUI;
 import processing.app.syntax.*;
 import processing.core.*;
 
+import static org.processing.test.KtTestKt.Start;
+
 
 /**
  * Main editor panel for the Processing Development Environment.
@@ -217,6 +219,8 @@ public abstract class Editor extends JFrame implements RunnerListener {
 
     Box box = Box.createVerticalBox();
     Box upper = Box.createVerticalBox();
+
+    Start(upper);
 
     rebuildModePopup();
     toolbar = createToolbar();

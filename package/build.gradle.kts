@@ -6,6 +6,8 @@ plugins {
     id("application")
     id("io.github.fvarrui.javapackager.plugin")
     id("de.undercouch.download") version "5.6.0"
+//    kotlin("jvm") version "1.9.23"
+//    id("org.jetbrains.compose") version "1.6.2"
 }
 
 group = "org.processing"
@@ -69,7 +71,13 @@ javapackager {
     }
 }
 
+//kotlin {
+//    jvmToolchain(21)
+//}
+
 repositories {
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }
 }
@@ -80,6 +88,15 @@ dependencies {
     implementation(project(":app"))
     implementation(project(":core"))
     implementation(project(":java"))
+
+//    implementation(compose.runtime)
+//    implementation(compose.foundation)
+//    implementation(compose.material)
+//    implementation(compose.ui)
+//    implementation(compose.components.resources)
+//    implementation(compose.components.uiToolingPreview)
+//
+//    implementation(compose.desktop.currentOs)
 }
 
 // This could be removed if the internal build system within processing was moved to gradle

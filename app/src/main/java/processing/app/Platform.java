@@ -331,6 +331,10 @@ public class Platform {
       var removeLib = name.replace("lib","");
       return new File(parent, removeLib);
     }
+    if(System.getProperty("compose.application.resources.dir") != null){
+      return new File(System.getProperty("compose.application.resources.dir"),name.replace("lib",""));
+    }
+
     return new File(System.getProperty("user.dir"),name.replace("lib",""));
   }
 

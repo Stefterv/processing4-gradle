@@ -10,6 +10,8 @@ group = "org.processing"
 version = "4.4"
 
 repositories {
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }
 }
