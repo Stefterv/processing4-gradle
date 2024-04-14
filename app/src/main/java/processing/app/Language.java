@@ -128,7 +128,7 @@ public class Language {
     } catch (IOException e) {
       Messages.showError("Translation Trouble",
         "There was a problem reading the language translations folder.\n" +
-        "You may need to reinstall, or report if the problem persists." + System.getProperty("compose.application.resources.dir"), e);
+        "You may need to reinstall, or report if the problem persists." + System.getProperty("compose.application.resources.dir") + "2:" + System.getProperty("user.dir"), e);
     }
     return supported.toArray();
   }

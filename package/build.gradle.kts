@@ -37,6 +37,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.project"
             packageVersion = "1.0.0"
+
+            appResourcesRootDir.set(project.layout.buildDirectory.dir("resources/main"))
+
         }
     }
 }
@@ -124,6 +127,10 @@ tasks.register<Copy>("coreJar") {
     include("*-all.jar")
 }
 tasks.compileJava { dependsOn("coreJar") }
+
+tasks.register<Copy>("extraResources"){
+
+}
 
 tasks.register<Download>("downloadExamples"){
     dependsOn(tasks.processResources)
