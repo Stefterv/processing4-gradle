@@ -160,9 +160,9 @@ public class PdePreprocessor {
       }
     }
 
-    if (Preferences.getBoolean("preproc.substitute_unicode")) {
-      inProgram = substituteUnicode(inProgram);
-    }
+//    if (Preferences.getBoolean("preproc.substitute_unicode")) {
+//      inProgram = substituteUnicode(inProgram);
+//    }
 
     // Ensure ends with single newline
     while (inProgram.endsWith("\n")) {
@@ -414,7 +414,7 @@ public class PdePreprocessor {
      */
     public PdePreprocessor build() {
       final int effectiveTabSize =
-        tabSize.orElseGet(() -> Preferences.getInteger("editor.tabs.size"));
+        tabSize.orElse(2);
 
       final boolean effectiveIsTesting = isTesting.orElse(false);
 
