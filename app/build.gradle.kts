@@ -4,9 +4,6 @@ plugins {
     id("io.github.fvarrui.javapackager.plugin")
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }

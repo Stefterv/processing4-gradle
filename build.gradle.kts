@@ -2,10 +2,12 @@ plugins {
     id("java")
 }
 
-group = "org.processing"
-
 repositories {
     mavenCentral()
+}
+allprojects {
+    group = "org.processing"
+    version = "4.4"
 }
 
 buildscript {

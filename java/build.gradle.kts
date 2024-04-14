@@ -6,9 +6,6 @@ plugins {
     id("antlr")
 }
 
-group = "org.processing"
-version = "4.4"
-
 repositories {
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }
