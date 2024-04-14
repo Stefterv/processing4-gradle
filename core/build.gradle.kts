@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "1.9.23"
+    id("maven-publish")
 }
 
 repositories {
@@ -26,6 +27,16 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "org.processing"
+            artifactId = "core"
+
+            from(components["java"])
+        }
+    }
+}
 
 tasks.test {
     useJUnitPlatform()
