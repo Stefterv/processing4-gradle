@@ -63,7 +63,7 @@ javapackager {
     ))
     macConfig.apply {
         isGeneratePkg = false
-        isGenerateDmg = false
+//        isGenerateDmg = false
         appId = "org.processing.app"
         entitlements = file("assets/mac/processing.entitlements")
         backgroundImage = file("assets/mac/background.png")
