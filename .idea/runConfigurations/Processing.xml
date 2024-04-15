@@ -9,7 +9,7 @@
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/package" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--scan" />
+      <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
         <list />
       </option>
@@ -18,7 +18,7 @@
           <option value="run" />
         </list>
       </option>
-      <option name="vmOptions" value="-Xdock:icon=shared/icons/app-1024.png -Xdock:name=Processing" />
+      <option name="vmOptions" value="" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>

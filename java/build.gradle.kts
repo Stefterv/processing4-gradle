@@ -21,7 +21,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("org.eclipse.jdt:org.eclipse.jdt.core:3.37.0")
 
-    implementation(project(":app"))
+    compileOnly(project(":app"))
     implementation(project(":core"))
 
     testImplementation("junit:junit:4.13.2")
