@@ -5,6 +5,9 @@ plugins {
     id("maven-publish")
 }
 
+group = "org.processing.core"
+version = "4.4.0"
+
 repositories {
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }

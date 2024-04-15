@@ -8,7 +8,7 @@ plugins {
     id("de.undercouch.download") version "5.6.0"
 }
 
-group = "org.processing"
+group = "org.processing.app"
 version = "4.4.0"
 
 repositories {
