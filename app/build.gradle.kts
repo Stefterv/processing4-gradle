@@ -32,7 +32,7 @@ dependencies {
     implementation("net.java.dev.jna:jna-platform:5.12.1")
 
 
-    compileOnly(project(":core"))
+    implementation(project(":core"))
     runtimeOnly(project(":java"))
 }
 
