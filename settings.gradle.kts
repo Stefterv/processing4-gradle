@@ -11,3 +11,13 @@ include("core")
 include("app")
 include("java")
 include("package")
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.github.fvarrui:javapackager:1.7.5")
+    }
+}

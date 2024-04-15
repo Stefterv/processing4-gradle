@@ -8,6 +8,7 @@ plugins {
     id("de.undercouch.download") version "5.6.0"
 }
 
+
 application {
     mainClass = "processing.app.Base"
 }

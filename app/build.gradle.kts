@@ -1,7 +1,5 @@
 plugins {
     id("java")
-    id("application")
-    id("io.github.fvarrui.javapackager.plugin")
 }
 
 repositories {
@@ -17,15 +15,6 @@ sourceSets{
     }
 }
 
-application {
-    mainClass = "processing.app.ui.Splash"
-}
-
-javapackager {
-    mainClass("processing.app.ui.Splash")
-    bundleJre(true)
-    additionalResources(files("../shared").toMutableList())
-}
 
 dependencies {
     implementation("com.formdev:flatlaf:3.4.1")
@@ -35,6 +24,7 @@ dependencies {
 
 
     implementation(project(":core"))
+    implementation(project(":java"))
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
