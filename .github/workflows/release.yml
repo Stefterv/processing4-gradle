@@ -45,3 +45,4 @@ jobs:
           app/build/Processing_*.dmg
           app/build/Processing_*.exe
           app/build/Processing_*.deb
+          app/build/Processing_*.rpm
