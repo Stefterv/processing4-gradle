@@ -19,8 +19,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: read
+    permissions: write-all
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
