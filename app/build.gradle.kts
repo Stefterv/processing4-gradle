@@ -8,6 +8,9 @@ plugins {
     id("de.undercouch.download") version "5.6.0"
 }
 
+group = "org.processing"
+version = "4.4.0"
+
 repositories {
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }
