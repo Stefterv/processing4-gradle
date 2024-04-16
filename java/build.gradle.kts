@@ -26,6 +26,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-core:5.11.0")
+    testCompileOnly(project(":app"))
 
     antlr("org.antlr:antlr4:4.13.1")
 }

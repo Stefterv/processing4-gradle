@@ -53,8 +53,6 @@ javapackager {
     name("Processing")
     url("https://processing.org")
     //    licenseFile("todo")
-    // TODO: Add after resources folder
-    additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList() ?: mutableListOf())
     fileAssociations(mutableListOf(
         FileAssociation().apply {
             extension = "pde"
@@ -85,6 +83,14 @@ javapackager {
         isDisableRunAfterInstall = false
     }
 }
+
+tasks.register("additionalResources"){
+    dependsOn(tasks.processResources)
+    doLast {
+        javapackager.additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList() ?: mutableListOf())
+    }
+}
+tasks.`package`{ dependsOn("additionalResources") }
 
 // This could be removed if the internal build system within processing was moved to gradle
 tasks.register<Copy>("coreJar") {
