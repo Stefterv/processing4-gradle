@@ -39,5 +39,5 @@ tasks.compileTestJava {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnit()
 }
