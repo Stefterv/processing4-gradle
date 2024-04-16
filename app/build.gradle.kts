@@ -47,7 +47,7 @@ javapackager {
 //    bundleJre(false)
     // Bundling the JRE is what is causing the missing classes for the autocomplete, it doesn't copy over the jmod files that we need
     bundleJre(true)
-//    customizedJre(false) // Disabled to enabled debugging on the build package
+    customizedJre(false) // Disabled to enabled debugging on the build package
 
     displayName("Processing")
     name("Processing")
