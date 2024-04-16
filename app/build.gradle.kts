@@ -86,6 +86,7 @@ javapackager {
 
 tasks.register("additionalResources"){
     dependsOn(tasks.processResources)
+    dependsOn(tasks.getByName("coreJar"))
     doLast {
         javapackager.additionalResources( file("build/resources/main").list()?.map { t->  file("build/resources/main/${t}") }?.toMutableList() ?: mutableListOf())
     }
