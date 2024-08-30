@@ -1,5 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
-import io.github.fvarrui.javapackager.model.FileAssociation
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -8,7 +8,7 @@ plugins {
 //    id("io.github.fvarrui.javapackager.plugin")
     id("de.undercouch.download") version "5.6.0"
     kotlin("jvm") version "1.9.23"
-    id("org.jetbrains.compose") version "1.6.2"
+    id("org.jetbrains.compose") version "1.6.11"
 }
 
 group = "org.processing"
@@ -19,13 +19,13 @@ version = "4.4"
 //}
 
 // This can be removed by moving the asset management to native Java resources
-sourceSets{
-    main{
-        resources {
-            srcDirs("../shared")
-        }
-    }
-}
+//sourceSets{
+//    main{
+//        resources {
+//            srcDirs("../shared")
+//        }
+//    }
+//}
 
 compose.desktop {
     application {
@@ -35,11 +35,10 @@ compose.desktop {
             includeAllModules = true
 
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.project"
+            packageName = "com.processing.app"
             packageVersion = "1.0.0"
 
-            appResourcesRootDir.set(project.layout.buildDirectory.dir("resources/main"))
-
+            appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
         }
     }
 }
@@ -128,6 +127,7 @@ tasks.register<Copy>("coreJar") {
 }
 tasks.compileJava { dependsOn("coreJar") }
 
+
 tasks.register<Copy>("extraResources"){
 
 }
@@ -150,3 +150,28 @@ tasks.register<Copy>("unzipExamples"){
 }
 
 tasks.jar{ finalizedBy("unzipExamples") }
+
+val os: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
+val arch = System.getProperty("os.arch")
+var platform = "linux"
+if (os.isWindows) {
+    platform = "windows"
+} else if (os.isMacOsX) {
+    platform = "mac"
+}
+tasks.register<Download>("downloadJDK"){
+    src("https://api.adoptium.net/v3/binary/latest/17/ga/${platform}/${arch}/jdk/hotspot/normal/eclipse?project=jdk")
+    dest(layout.buildDirectory.file("jdk-${platform}-${arch}.tar.gz"))
+    overwrite(false)
+}
+tasks.register<Copy>("unzipJDK"){
+    val dl = tasks.findByPath("downloadJDK") as Download
+    dependsOn(dl)
+    from(tarTree(dl.dest))
+    eachFile{
+        path = Regex("jdk-[\\d.+]+").replaceFirst(path, "jdk")
+    }
+    into(layout.buildDirectory.dir("resources/${platform}-${arch}/"))
+}
+tasks.jar { dependsOn("unzipJDK") }
+tasks.processResources{ finalizedBy("unzipJDK") }

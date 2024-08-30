@@ -28,10 +28,9 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.*;
 
 import com.sun.jna.platform.FileUtils;
 
@@ -320,27 +319,70 @@ public class Platform {
    * or inside Contents/Resources/Java on Mac OS X. This will return the local
    * JRE location, *whether it is the active JRE*.
    */
+  static File tempFolder;
+
   @Deprecated
   static public File getContentFile(String name) {
     var url = Platform.class.getClassLoader().getResource("defaults.txt");
     if(url == null) Messages.showError("Missing defaults.txt", "Could not find the main resource file", new Exception(""));
-    if(!url.toString().startsWith("jar")){
+    var urlString = url.toString();
+    if(!urlString.startsWith("jar")){
       var path = url.getPath();
       var parent = new File(path).getParent();
 
       var removeLib = name.replace("lib","");
       return new File(parent, removeLib);
     }
-    if(System.getProperty("compose.application.resources.dir") != null){
-      return new File(System.getProperty("compose.application.resources.dir"),name.replace("lib",""));
+    if(tempFolder == null){
+      try {
+        tempFolder = Files.createTempDirectory("processing").toFile();
+        copyFromJar("/", tempFolder.toPath());
+      } catch (IOException | URISyntaxException e) {
+        e.printStackTrace();
+      }
     }
 
-    return new File(System.getProperty("user.dir"),name.replace("lib",""));
+    return new File(tempFolder,name.replace("lib",""));
+  }
+  public static void copyFromJar(String source, final Path target) throws URISyntaxException, IOException {
+    var resource = Platform.class.getResource("").toURI();
+    var fileSystem = FileSystems.newFileSystem(
+            resource,
+            Collections.<String, String>emptyMap()
+    );
+
+
+    final Path jarPath = fileSystem.getPath(source);
+
+    Files.walkFileTree(jarPath, new SimpleFileVisitor<Path>() {
+
+      private Path currentTarget;
+
+      @Override
+      public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        currentTarget = target.resolve(jarPath.relativize(dir).toString());
+        Files.createDirectories(currentTarget);
+        return FileVisitResult.CONTINUE;
+      }
+
+      @Override
+      public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        Files.copy(file, target.resolve(jarPath.relativize(file).toString()), StandardCopyOption.REPLACE_EXISTING);
+        return FileVisitResult.CONTINUE;
+      }
+
+    });
   }
 
-
   static public File getJavaHome() {
-    return new File(System.getProperty("java.home"));
+    var home = System.getProperty("java.home");
+    var resourceHome = getContentFile(("lib/jdk/Contents/Home"));
+    var resoucesCompose = System.getProperty("compose.application.resources.dir");
+    var exists = resourceHome.exists();
+    if(exists){
+      return resourceHome;
+    }
+    return new File(home);
   }
 
 
