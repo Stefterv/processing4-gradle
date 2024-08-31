@@ -71,7 +71,7 @@ import processing.app.laf.PdeMenuItemUI;
 import processing.app.syntax.*;
 import processing.core.*;
 
-import static org.processing.test.KtTestKt.Start;
+import static org.processing.test.ComposeHelloWorldKt.Start;
 
 
 /**

@@ -19,10 +19,24 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "${rootProject.group}.app"
+            packageName = "Processing"
             packageVersion = rootProject.version as String
 
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+            macOS{
+                bundleID = "org.processingfoundation.processing.app"
+//                entitlementsFile = project.file("resources/mac-entitlements.plist")
+                iconFile = project.file("assets/mac/processing.icns")
+            }
+            windows{
+                iconFile = project.file("assets/windows/processing.ico")
+            }
+            linux {
+                iconFile = project.file("assets/linux/processing.png")
+            }
+            buildTypes.release.proguard{
+                optimize = false
+            }
         }
     }
 }
