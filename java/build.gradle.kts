@@ -1,13 +1,10 @@
-
-
 plugins {
     id("java")
-    id("application")
     id("antlr")
 }
 
-group = "org.processing"
-version = "4.4"
+group = rootProject.group
+version = rootProject.version
 
 repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -19,7 +16,6 @@ repositories {
 
 dependencies {
     implementation("com.google.classpath-explorer:classpath-explorer:1.0")
-//    implementation("org.antlr:antlr4-runtime:4.13.1")
     implementation("org.netbeans.api:org-netbeans-swing-outline:RELEASE210")
     implementation("org.apache.ant:ant:1.10.14")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:0.22.0")

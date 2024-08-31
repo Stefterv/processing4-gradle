@@ -4,23 +4,20 @@ import de.undercouch.gradle.tasks.download.Download
 
 plugins {
     id("java")
-//    id("application")
-//    id("io.github.fvarrui.javapackager.plugin")
     id("de.undercouch.download") version "5.6.0"
     kotlin("jvm") version "1.9.23"
     id("org.jetbrains.compose") version "1.6.11"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = rootProject.name
+version = rootProject.version
 
 kotlin {
     jvmToolchain(21)
 }
 
 repositories {
-//    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    maven("https://plugins.gradle.org/m2/")
+    maven("https://plugins.gradle.org/m2/" )
     google()
     mavenCentral()
     maven { url = uri("https://jogamp.org/deployment/maven") }
@@ -33,16 +30,6 @@ sourceSets{
         }
     }
 }
-
-//application {
-//    mainClass = "processing.app.ui.Splash"
-//}
-
-//javapackager {
-//    mainClass("processing.app.ui.Splash")
-//    bundleJre(true)
-//    additionalResources(files("../shared").toMutableList())
-//}
 
 dependencies {
     implementation("com.formdev:flatlaf:3.4.1")
@@ -65,45 +52,7 @@ dependencies {
 
     implementation(compose.desktop.currentOs)
 }
-compose.desktop {
-    application {
-        mainClass = "processing.app.ui.Splash"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.project"
-            packageVersion = "1.0.0"
-        }
-    }
-}
-
 
 tasks.test {
     useJUnitPlatform()
 }
-
-
-tasks.register<Download>("downloadJDK"){
-    val os: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
-    val arch = System.getProperty("os.arch")
-    var platform = "linux"
-    if (os.isWindows) {
-        platform = "windows"
-    } else if (os.isMacOsX) {
-        platform = "mac"
-    }
-    src("https://api.adoptium.net/v3/binary/latest/17/ga/${platform}/${arch}/jdk/hotspot/normal/eclipse?project=jdk")
-    dest(layout.buildDirectory.file("jdk-${platform}-${arch}.tar.gz"))
-    overwrite(false)
-}
-tasks.register<Copy>("unzipJDK"){
-    val dl = tasks.findByPath("downloadJDK") as Download
-    dependsOn(dl)
-    from(tarTree(dl.dest))
-    eachFile{
-        path = Regex("jdk-[\\d.+]+").replaceFirst(path, "jdk")
-    }
-    into(layout.buildDirectory.dir("resources/main"))
-}
-tasks.jar { dependsOn("unzipJDK") }
-tasks.processResources{ finalizedBy("unzipJDK") }
