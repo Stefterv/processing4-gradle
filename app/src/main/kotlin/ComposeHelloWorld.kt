@@ -1,10 +1,14 @@
 package org.processing.test
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposePanel
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -12,9 +16,11 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.MenuBar
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import java.awt.BorderLayout
 import javax.swing.Box
 import javax.swing.SwingUtilities
 
@@ -22,14 +28,7 @@ import javax.swing.SwingUtilities
 @Composable
 fun ComposeHelloWorld() {
     var open by remember { mutableStateOf(false) }
-
-    Surface(
-        onClick = {
-           open = !open
-        }
-    ) {
-        Text("Hello, World from Jetpack Compose!")
-    }
+    Text("Hello, World from Jetpack Compose!", modifier = Modifier.clickable { open = !open })
     if(!open) return
     var isSubmenuShowing by remember { mutableStateOf(false) }
     var action by  remember { mutableStateOf("Last action: None") }
@@ -66,7 +65,7 @@ fun ComposeHelloWorld() {
                 Item("Exit", onClick = { isOpen = false }, shortcut = KeyShortcut(Key.Escape), mnemonic = 'E')
             }
         }
-        Text("Hello, World!")
+        Text("Hello, World!", modifier = Modifier.padding(16.dp))
     }
 }
 object AboutIcon : Painter() {
@@ -85,7 +84,7 @@ fun Start(box: Box){
             }
         }
         box.apply {
-            add(composePanel)
+            add(composePanel, BorderLayout.CENTER)
         }
     }
 }
